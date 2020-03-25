@@ -9,3 +9,5 @@ spring:
 mybatis:
   type-aliases-package: com.woniu.pojo
   mapper-locations: mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

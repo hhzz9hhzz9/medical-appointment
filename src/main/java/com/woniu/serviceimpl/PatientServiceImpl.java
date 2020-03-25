@@ -23,12 +23,6 @@ public class PatientServiceImpl implements IPatientService {
 
         return patientMapper.loginTest(patient);
     }
-
-    @Override
-    public Patient findOne(Integer id) {
-        return patientMapper.selectByPrimaryKey(id);
-    }
-
     @Override
     public void register(Patient patient) {
         patientMapper.insertSelective(patient);

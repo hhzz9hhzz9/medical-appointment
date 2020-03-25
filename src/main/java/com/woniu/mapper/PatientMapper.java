@@ -15,7 +15,6 @@ public interface PatientMapper {
 
     void insertSelective(Patient record);
 
-    Patient selectByPrimaryKey(Integer patientId);
 
     void updateByPrimaryKeySelective(Patient record);
 

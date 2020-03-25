@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface IPatientService {
     Patient loginTest(Patient patient);
-    Patient findOne(Integer id);
     void register(Patient patient);
 
     List<Patient> findAll();
