@@ -19,18 +19,10 @@ public class TestController {
     @Autowired
     private IPatientService patientService;
 
-//   @RequestMapping("/index")
-//   public String springbootTest(){
-//       return "index" ;
-//    }
-//
-//    @RequestMapping("/login")
-//    public String show(){ return "login"; }
-
     @ResponseBody
-    @RequestMapping("/loginIn")
+    @PostMapping("/loginIn")
     public ResultVO login(@RequestBody Patient patient, HttpSession session){
-        ResultVO resultVO =null;
+        ResultVO resultVO;
         Patient loginUser = patientService.loginTest(patient);
 
         if (loginUser != null) {
@@ -44,27 +36,55 @@ public class TestController {
     @ResponseBody
     @PostMapping("/register")
     public ResultVO register(@RequestBody Patient patient){
-        ResultVO resultVO = null;
+        ResultVO resultVO;
         try {
             patient.setPatientStatus(1);
             patientService.register(patient);
             resultVO = new ResultVO(200, "注册成功");
         } catch (Exception e) {
             resultVO = new ResultVO(500, "注册失败");
-        }finally {
-           return  resultVO;
         }
+           return  resultVO;
+
     }
     @GetMapping("/patientList")
     @ResponseBody
     public ResultVO findAll() {
         List<Patient> list = patientService.findAll();
 
-        ResultVO resultVO = null;
+        ResultVO resultVO;
         if(list != null && list.size() > 0) {
             resultVO = new ResultVO(200,"查询成功", list);
         } else {
             resultVO = new ResultVO(500, "查询失败");
+        }
+        return resultVO;
+    }
+    @ResponseBody
+    @DeleteMapping("deletePatient/{patientId}")
+    public ResultVO deletePatient(@PathVariable Integer patientId){
+        ResultVO resultVO;
+        try {
+            patientService.delete(patientId);
+            resultVO = new ResultVO(200, "删除数据成功", patientId);
+        } catch (Exception e) {
+            resultVO = new ResultVO(500, "删除数据失败");        }
+        return resultVO;
+    }
+    /**
+    * @authot llf
+    * @date 2020-3-26 21:25:06
+    */
+    @ResponseBody
+    @PutMapping("updatePatient")
+    public ResultVO updatePatient(@RequestBody Patient patient){
+        ResultVO resultVO;
+        try {
+            patientService.update(patient);
+            resultVO = new ResultVO(200, "更新数据成功", patient);
+
+        } catch (Exception e) {
+            resultVO = new ResultVO(500, "更新数据失败");
         }
         return resultVO;
     }

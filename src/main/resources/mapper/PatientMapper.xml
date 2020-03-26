@@ -15,14 +15,6 @@
     delete from patient
     where patient_id = #{patientId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.woniu.pojo.Patient">
-    insert into patient (patient_id, patient_name, patient_age,
-      patient_account, patient_pwd, patient_gender,
-      patient_status)
-    values (#{patientId,jdbcType=INTEGER}, #{patientName,jdbcType=VARCHAR}, #{patientAge,jdbcType=INTEGER},
-      #{patientAccount,jdbcType=VARCHAR}, #{patientPwd,jdbcType=VARCHAR}, #{patientGender,jdbcType=VARCHAR},
-      #{patientStatus,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.woniu.pojo.Patient">
     insert into patient
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -94,16 +86,6 @@
         patient_status = #{patientStatus,jdbcType=INTEGER},
       </if>
     </set>
-    where patient_id = #{patientId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Patient">
-    update patient
-    set patient_name = #{patientName,jdbcType=VARCHAR},
-      patient_age = #{patientAge,jdbcType=INTEGER},
-      patient_account = #{patientAccount,jdbcType=VARCHAR},
-      patient_pwd = #{patientPwd,jdbcType=VARCHAR},
-      patient_gender = #{patientGender,jdbcType=VARCHAR},
-      patient_status = #{patientStatus,jdbcType=INTEGER}
     where patient_id = #{patientId,jdbcType=INTEGER}
   </update>
 

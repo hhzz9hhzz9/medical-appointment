@@ -32,4 +32,14 @@ public class PatientServiceImpl implements IPatientService {
     public List<Patient> findAll() {
         return patientMapper.findAll();
     }
+
+    @Override
+    public void delete(Integer patientId) {
+        patientMapper.deleteByPrimaryKey(patientId);
+    }
+
+    @Override
+    public void update(Patient patient) {
+        patientMapper.updateByPrimaryKeySelective(patient);
+    }
 }

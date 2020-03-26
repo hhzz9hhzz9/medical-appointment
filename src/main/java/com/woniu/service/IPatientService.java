@@ -14,4 +14,8 @@ public interface IPatientService {
     void register(Patient patient);
 
     List<Patient> findAll();
+
+    void delete(Integer patientId);
+
+    void update(Patient patient);
 }

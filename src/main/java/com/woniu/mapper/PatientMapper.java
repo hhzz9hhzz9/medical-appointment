@@ -11,14 +11,9 @@ import java.util.List;
 public interface PatientMapper {
     void deleteByPrimaryKey(Integer patientId);
 
-    void insert(Patient record);
-
     void insertSelective(Patient record);
 
-
     void updateByPrimaryKeySelective(Patient record);
-
-    void updateByPrimaryKey(Patient record);
 
     Patient loginTest(Patient patient);
 
