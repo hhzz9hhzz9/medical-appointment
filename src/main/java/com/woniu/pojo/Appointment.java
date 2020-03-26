@@ -1,9 +1,8 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Appointment implements Serializable {
+public class Appointment {
     private Integer appointmentId;
 
     private Integer astatusId;
@@ -15,21 +14,6 @@ public class Appointment implements Serializable {
     private String aname;
 
     private Date atime;
-
-    private static final long serialVersionUID = 1L;
-
-    public Appointment(Integer appointmentId, Integer astatusId, Integer doctorId, Integer patientId, String aname, Date atime) {
-        this.appointmentId = appointmentId;
-        this.astatusId = astatusId;
-        this.doctorId = doctorId;
-        this.patientId = patientId;
-        this.aname = aname;
-        this.atime = atime;
-    }
-
-    public Appointment() {
-        super();
-    }
 
     public Integer getAppointmentId() {
         return appointmentId;

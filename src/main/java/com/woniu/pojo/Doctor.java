@@ -1,8 +1,6 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
-
-public class Doctor implements Serializable {
+public class Doctor {
     private Integer doctorId;
 
     private Integer zhenshiId;
@@ -10,19 +8,6 @@ public class Doctor implements Serializable {
     private Integer officeId;
 
     private String doctorName;
-
-    private static final long serialVersionUID = 1L;
-
-    public Doctor(Integer doctorId, Integer zhenshiId, Integer officeId, String doctorName) {
-        this.doctorId = doctorId;
-        this.zhenshiId = zhenshiId;
-        this.officeId = officeId;
-        this.doctorName = doctorName;
-    }
-
-    public Doctor() {
-        super();
-    }
 
     public Integer getDoctorId() {
         return doctorId;

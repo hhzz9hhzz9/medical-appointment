@@ -1,9 +1,8 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Paidui implements Serializable {
+public class Paidui {
     private Integer pdId;
 
     private Integer zhenshiId;
@@ -13,20 +12,6 @@ public class Paidui implements Serializable {
     private Integer pdNo;
 
     private Date pdTime;
-
-    private static final long serialVersionUID = 1L;
-
-    public Paidui(Integer pdId, Integer zhenshiId, Integer officeId, Integer pdNo, Date pdTime) {
-        this.pdId = pdId;
-        this.zhenshiId = zhenshiId;
-        this.officeId = officeId;
-        this.pdNo = pdNo;
-        this.pdTime = pdTime;
-    }
-
-    public Paidui() {
-        super();
-    }
 
     public Integer getPdId() {
         return pdId;

@@ -1,9 +1,8 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Scheduling implements Serializable {
+public class Scheduling {
     private Integer schedulingId;
 
     private Date startTime;
@@ -11,19 +10,6 @@ public class Scheduling implements Serializable {
     private Date endTime;
 
     private Integer duration;
-
-    private static final long serialVersionUID = 1L;
-
-    public Scheduling(Integer schedulingId, Date startTime, Date endTime, Integer duration) {
-        this.schedulingId = schedulingId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.duration = duration;
-    }
-
-    public Scheduling() {
-        super();
-    }
 
     public Integer getSchedulingId() {
         return schedulingId;

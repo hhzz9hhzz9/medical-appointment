@@ -1,9 +1,8 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Sourcepoolinfo implements Serializable {
+public class Sourcepoolinfo {
     private Integer spiId;
 
     private Integer sourcePoolId;
@@ -11,19 +10,6 @@ public class Sourcepoolinfo implements Serializable {
     private Date spTime;
 
     private Integer spStock;
-
-    private static final long serialVersionUID = 1L;
-
-    public Sourcepoolinfo(Integer spiId, Integer sourcePoolId, Date spTime, Integer spStock) {
-        this.spiId = spiId;
-        this.sourcePoolId = sourcePoolId;
-        this.spTime = spTime;
-        this.spStock = spStock;
-    }
-
-    public Sourcepoolinfo() {
-        super();
-    }
 
     public Integer getSpiId() {
         return spiId;

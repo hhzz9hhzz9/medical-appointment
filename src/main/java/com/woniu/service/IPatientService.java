@@ -6,8 +6,9 @@ import java.util.List;
 
 /**
  * @author llf
- * @date 2020/3/24 19:38
- */
+ * @date 2020/3/24 19:38*/
+
+
 
 public interface IPatientService {
     Patient loginTest(Patient patient);

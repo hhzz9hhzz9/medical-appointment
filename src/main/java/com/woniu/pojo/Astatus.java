@@ -1,22 +1,9 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
-
-public class Astatus implements Serializable {
+public class Astatus {
     private Integer astatusId;
 
     private String astatusName;
-
-    private static final long serialVersionUID = 1L;
-
-    public Astatus(Integer astatusId, String astatusName) {
-        this.astatusId = astatusId;
-        this.astatusName = astatusName;
-    }
-
-    public Astatus() {
-        super();
-    }
 
     public Integer getAstatusId() {
         return astatusId;

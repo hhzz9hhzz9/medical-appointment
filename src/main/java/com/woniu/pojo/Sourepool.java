@@ -1,8 +1,6 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
-
-public class Sourcepool implements Serializable {
+public class Sourepool {
     private Integer sourcePoolId;
 
     private Integer doctorId;
@@ -10,19 +8,6 @@ public class Sourcepool implements Serializable {
     private String sourceName;
 
     private Integer maxCount;
-
-    private static final long serialVersionUID = 1L;
-
-    public Sourcepool(Integer sourcePoolId, Integer doctorId, String sourceName, Integer maxCount) {
-        this.sourcePoolId = sourcePoolId;
-        this.doctorId = doctorId;
-        this.sourceName = sourceName;
-        this.maxCount = maxCount;
-    }
-
-    public Sourcepool() {
-        super();
-    }
 
     public Integer getSourcePoolId() {
         return sourcePoolId;

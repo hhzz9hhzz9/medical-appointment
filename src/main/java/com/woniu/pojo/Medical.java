@@ -14,20 +14,6 @@ public class Medical implements Serializable {
 
     private String medicalInfo;
 
-    private static final long serialVersionUID = 1L;
-
-    public Medical(Integer medicalId, Integer patientId, Integer doctorId, Date medicalTime, String medicalInfo) {
-        this.medicalId = medicalId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.medicalTime = medicalTime;
-        this.medicalInfo = medicalInfo;
-    }
-
-    public Medical() {
-        super();
-    }
-
     public Integer getMedicalId() {
         return medicalId;
     }
