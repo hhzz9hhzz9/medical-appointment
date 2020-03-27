@@ -28,8 +28,4 @@
     <insert id="add" parameterType="com.woniu.pojo.Scheduling">
         insert into scheduling values(null, #{startTime}, #{endTime},#{duration})
     </insert>
-    <update id="updateRS" parameterType="int" >
-       update scheduling set start_time = #{schedulingId}, end_time = #{endTime},duration=#{duration}
-        where scheduling_id = #{schedulingId}
-   </update>
 </mapper>
