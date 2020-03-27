@@ -1,14 +1,14 @@
-package com.woniu.mapper;
+package com.woniu.service;
 
 import com.woniu.pojo.Scheduling;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
-@Repository
-public interface SchedulingMapper {
+/**
+ * @author machuang
+ * @create 2020/03/2020/3/26
+ */
+public interface SchedulingService {
 
     List <Scheduling> findAll();
 

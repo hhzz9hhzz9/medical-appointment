@@ -1,28 +1,32 @@
 package com.woniu.pojo;
 
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
+@Data // Getters、Setters、toString() 等方法
 public class Scheduling implements Serializable {
     private Integer schedulingId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     private Integer duration;
 
     private static final long serialVersionUID = 1L;
+    private List<Doctor> list;
 
-    public Scheduling(Integer schedulingId, Date startTime, Date endTime, Integer duration) {
-        this.schedulingId = schedulingId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.duration = duration;
-    }
+
 
     public Scheduling() {
         super();
+    }
+
+    public Scheduling(List<Doctor> list) {
+        this.list = list;
     }
 
     public Integer getSchedulingId() {
@@ -55,5 +59,24 @@ public class Scheduling implements Serializable {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public List<Doctor> getList() {
+        return list;
+    }
+
+    public void setList(List<Doctor> list) {
+        this.list = list;
+    }
+
+    @Override
+    public String toString() {
+        return "Scheduling{" +
+                "schedulingId=" + schedulingId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", duration=" + duration +
+                ", list=" + list +
+                '}';
     }
 }
