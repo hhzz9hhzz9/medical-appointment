@@ -44,7 +44,7 @@ public class TestController {
         } catch (Exception e) {
             resultVO = new ResultVO(500, "注册失败");
         }
-           return  resultVO;
+        return  resultVO;
 
     }
     @GetMapping("/patientList")
@@ -72,9 +72,9 @@ public class TestController {
         return resultVO;
     }
     /**
-    * @authot llf
-    * @date 2020-3-26 21:25:06
-    */
+     * @authot llf
+     * @date 2020-3-26 21:25:06
+     */
     @ResponseBody
     @PutMapping("updatePatient")
     public ResultVO updatePatient(@RequestBody Patient patient){
