@@ -6,9 +6,9 @@ import java.util.Date;
 public class Medical implements Serializable {
     private Integer medicalId;
 
-    private Integer patientId;
+    private Patient patient;
 
-    private Integer doctorId;
+    private Doctor doctor;
 
     private Date medicalTime;
 
@@ -22,20 +22,20 @@ public class Medical implements Serializable {
         this.medicalId = medicalId;
     }
 
-    public Integer getPatientId() {
-        return patientId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Integer getDoctorId() {
-        return doctorId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public Date getMedicalTime() {

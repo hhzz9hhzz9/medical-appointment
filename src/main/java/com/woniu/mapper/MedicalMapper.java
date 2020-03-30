@@ -1,36 +1,64 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Medical;
-import com.web.pojo.MedicalExample;
 import java.util.List;
+
+import com.woniu.pojo.Medical;
+import com.woniu.pojo.PageBean;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MedicalMapper {
-    long countByExample(MedicalExample example);
 
-    int deleteByExample(MedicalExample example);
+    /**
+     * 自定义方法
+     *
+     * */
 
+    /*查全部病例信息*/
+    List<Medical> findAll();
+
+    /*查询单个病例信息根据id*/
+    Medical findOne(Integer id);
+
+    /*根据患者姓名查询其所有病例信息*/
+    List<Medical> findAllByPatientName(String patientName);
+
+    /*查分页模糊查询处理后全部病例信息条目数*/
+    int countByPageBean(PageBean<Medical> pageBean);
+
+    /*批量删除病例信息*/
+    void deletes(Integer[] ids);
+
+
+    /**
+     * 逆向方法
+     *
+     * */
+    /*增加病例信息*/
+    int insertSelective(Medical record);
+
+    /*删除病例信息*/
     int deleteByPrimaryKey(Integer medicalId);
+
+    /*修改病例信息*/
+    int updateByPrimaryKeySelective(Medical record);
+
+
+
 
     int insert(Medical record);
 
-    int insertSelective(Medical record);
 
-    List<Medical> selectByExampleWithBLOBs(MedicalExample example);
 
-    List<Medical> selectByExample(MedicalExample example);
+
 
     Medical selectByPrimaryKey(Integer medicalId);
-
-    int updateByExampleSelective(@Param("record") Medical record, @Param("example") MedicalExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") Medical record, @Param("example") MedicalExample example);
-
-    int updateByExample(@Param("record") Medical record, @Param("example") MedicalExample example);
-
-    int updateByPrimaryKeySelective(Medical record);
 
     int updateByPrimaryKeyWithBLOBs(Medical record);
 
     int updateByPrimaryKey(Medical record);
+
+
+
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 
 public interface IPatientService {
+
     Patient loginTest(Patient patient);
     void register(Patient patient);
 
