@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniu.mapper.PatientMapper">
-<<<<<<< Updated upstream
-=======
-  <resultMap id="BaseResultMap" type="com.woniu.pojo.Patiehttp://mybatis.org/dtd/mybatis-3-mapper.dtdnt">
-    <constructor>
-      <idArg column="patient_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="patient_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="patient_age" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="patient_account" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="patient_pwd" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="patient_gender" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="patient_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
->>>>>>> Stashed changes
   <sql id="Base_Column_List">
     patient_id, patient_name, patient_age, patient_account, patient_pwd, patient_gender,
     patient_status
