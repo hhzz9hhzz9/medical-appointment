@@ -1,7 +1,13 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Zhenshi implements Serializable {
     private Integer zhenshiId;
 
@@ -9,39 +15,9 @@ public class Zhenshi implements Serializable {
 
     private String zhenshiName;
 
+    private  Office office;
+
     private static final long serialVersionUID = 1L;
 
-    public Zhenshi(Integer zhenshiId, Integer officeId, String zhenshiName) {
-        this.zhenshiId = zhenshiId;
-        this.officeId = officeId;
-        this.zhenshiName = zhenshiName;
-    }
 
-    public Zhenshi() {
-        super();
-    }
-
-    public Integer getZhenshiId() {
-        return zhenshiId;
-    }
-
-    public void setZhenshiId(Integer zhenshiId) {
-        this.zhenshiId = zhenshiId;
-    }
-
-    public Integer getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
-    }
-
-    public String getZhenshiName() {
-        return zhenshiName;
-    }
-
-    public void setZhenshiName(String zhenshiName) {
-        this.zhenshiName = zhenshiName == null ? null : zhenshiName.trim();
-    }
 }

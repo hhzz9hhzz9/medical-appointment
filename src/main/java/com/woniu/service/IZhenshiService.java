@@ -1,13 +1,14 @@
-package com.woniu.mapper;
+package com.woniu.service;
 
 import com.woniu.pojo.Zhenshi;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Mapper
-@Repository
-public interface ZhenshiMapper {
+
+/**
+ * @author jad
+ * @creat 2020/03/2020/3/26 17:44:51
+ */
+public interface IZhenshiService {
     void deleteByPrimaryKey(Integer zhenshiId);
 
     void insert(Zhenshi record);
@@ -17,5 +18,4 @@ public interface ZhenshiMapper {
     List<Zhenshi> findAll();
 
     Zhenshi findOneByPrimaryKey(Integer officeId);
-
 }

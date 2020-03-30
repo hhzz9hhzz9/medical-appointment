@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.woniu.mapper.ZhenshiMapper" >
+    <resultMap id="BaseResultMap" type="com.woniu.pojo.Zhenshi">
+        <id column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
+        <result column="office_id" jdbcType="INTEGER" property="officeId" />
+        <result column="zhenshi_name" jdbcType="VARCHAR" property="zhenshiName" />
+        <association property="office" javaType="com.woniu.pojo.Office" column="office_id" select="com.woniu.mapper.OfficeMapper.findOneByPrimaryKey"></association>
+
+    </resultMap>
+
+    <sql id="base_col_list">
+   zhenshi_id,office_id,zhenshi_name
+  </sql>
+    <insert id="insert" parameterType="com.woniu.pojo.Zhenshi">
+        insert into zhenshi
+      values (null,#{officeId},#{zhenshiName})
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from zhenshi where zhenshi_id=#{zhenshiId}
+    </delete>
+    <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Zhenshi">
+        update zhenshi set office_id=#{officeId},zhenshi_name=#{zhenshiName} where zhenshi_id=#{zhenshiId}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from zhenshi
+    </select>
+    <select id="findOneByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from zhenshi where zhenshi_id=#{zhenshiId}
+    </select>
 
 </mapper>
