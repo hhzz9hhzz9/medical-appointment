@@ -18,6 +18,7 @@ import java.util.List;
 public class PaiduiController {
     @Autowired
     private IPaiduiService paiduiService;
+    //增加排队记录
     @ResponseBody
     @PostMapping
     public ResultVO addpaidui(@RequestBody Paidui paidui){
@@ -32,7 +33,7 @@ public class PaiduiController {
         }
     }
 
-
+   //删除排队记录
     @ResponseBody
     @DeleteMapping("{pdId}")
     public ResultVO deletepaidui(@PathVariable Integer pdId){
@@ -43,6 +44,7 @@ public class PaiduiController {
             return new ResultVO(500, "删除数据失败", pdId);
         }
     }
+    //修改排队记录
     @ResponseBody
     @PutMapping
     public ResultVO update(@RequestBody Paidui paidui) {
@@ -53,6 +55,7 @@ public class PaiduiController {
             return new ResultVO(500, "修改数据失败", paidui);
         }
     }
+    //查询全部排队记录
     @ResponseBody
     @GetMapping
     public ResultVO findAll() {
@@ -66,6 +69,7 @@ public class PaiduiController {
         }
         return resultVO;
     }
+    //查询单条排队记录
     @ResponseBody
     @GetMapping("{pdId}")
     public ResultVO findOne(@PathVariable Integer pdId) {

@@ -17,7 +17,7 @@ import java.util.List;
 public class OfficeController {
     @Autowired
     private IOfficeService officeService;
-
+   //增加科室
     @ResponseBody
     @PostMapping("addoffic")
     public ResultVO addoffic(@RequestBody Office office){
@@ -33,7 +33,7 @@ public class OfficeController {
         }
     }
 
-
+  //删除科室
     @ResponseBody
     @DeleteMapping("{officeId}")
     public ResultVO deleteoffice(@PathVariable Integer officeId){
@@ -44,6 +44,7 @@ public class OfficeController {
             return new ResultVO(500, "删除数据失败", officeId);
         }
     }
+    //修改科室
     @ResponseBody
     @PutMapping("update")
     public ResultVO update(@RequestBody Office office) {
@@ -54,6 +55,7 @@ public class OfficeController {
             return new ResultVO(500, "修改数据失败", office);
         }
     }
+    //查询全部科室
     @ResponseBody
     @GetMapping("findAll")
     public ResultVO findAll() {
@@ -67,7 +69,7 @@ public class OfficeController {
         }
         return resultVO;
     }
-
+   //查询单条科室
     @ResponseBody
     @GetMapping("{officeId}")
     public ResultVO findOne(@PathVariable Integer officeId) {

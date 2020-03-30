@@ -19,6 +19,7 @@ import java.util.List;
 public class ZhenshiController {
     @Autowired
     private IZhenshiService zhenshiService;
+    //增加诊室
     @ResponseBody
     @PostMapping
     public ResultVO addzhenshi(@RequestBody Zhenshi zhenshi){
@@ -34,7 +35,7 @@ public class ZhenshiController {
         }
     }
 
-
+  //删除诊室
     @ResponseBody
     @DeleteMapping("{zhenshiId}")
     public ResultVO deletezhenshi(@PathVariable Integer zhenshiId){
@@ -45,6 +46,7 @@ public class ZhenshiController {
             return new ResultVO(500, "删除数据失败", zhenshiId);
         }
     }
+    //修改诊室
     @ResponseBody
     @PutMapping
     public ResultVO update(@RequestBody Zhenshi zhenshi) {
@@ -55,6 +57,7 @@ public class ZhenshiController {
             return new ResultVO(500, "修改数据失败", zhenshi);
         }
     }
+    //查询全部诊室
     @ResponseBody
     @GetMapping
     public ResultVO findAll() {
@@ -68,6 +71,7 @@ public class ZhenshiController {
         }
         return resultVO;
     }
+    //查询单个诊室
     @ResponseBody
     @GetMapping("{zhenshiId}")
     public ResultVO findOne(@PathVariable Integer zhenshiId) {
