@@ -1,14 +1,14 @@
-package com.woniu.mapper;
+package com.woniu.service;
 
 import com.woniu.pojo.Paidui;
-import com.woniu.pojo.Patient;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Mapper
-@Repository
-public interface PaiduiMapper {
+
+/**
+ * @author jad
+ * @creat 2020/03/2020/3/26 17:45:19
+ */
+public interface IPaiduiService {
     void deleteByPrimaryKey(Integer paiduiId);
 
     void insert(Paidui record);
@@ -18,8 +18,4 @@ public interface PaiduiMapper {
     List<Paidui> findAll();
 
     Paidui findOneByPrimaryKey(Integer paiduiId);
-
-
-
-
 }
