@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.woniu.mapper.PaiduiMapper" >
+    <resultMap id="BaseResultMap" type="com.woniu.pojo.Paidui">
+        <id column="pd_id" jdbcType="INTEGER" property="pdId" />
+        <result column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
+        <result column="office_id" jdbcType="INTEGER" property="officeId" />
+        <result column="pd_no" jdbcType="INTEGER" property="pdNo" />
+        <result column="pd_time" jdbcType="TIMESTAMP" property="pdTime" />
+        <association property="zhenshi" javaType="com.woniu.pojo.Zhenshi" column="zhenshi_id" select="com.woniu.mapper.ZhenshiMapper.findOneByPrimaryKey"></association>
+        <association property="office" javaType="com.woniu.pojo.Office" column="office_id" select="com.woniu.mapper.OfficeMapper.findOneByPrimaryKey"></association>
+
+    </resultMap>
+    <sql id="base_col_list">
+   pd_id,zhenshi_id,office_id,pd_no,pd_time
+  </sql>
+    <insert id="insert" parameterType="com.woniu.pojo.Paidui">
+        insert into paidui
+        values (null,#{zhenshiId},#{officeId},#{pdNo},#{pdTime})
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from paidui where pd_id=#{pdId}
+    </delete>
+    <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Paidui">
+        update paidui
+         <set>
+             <if test="zhenshiId != null">
+                 zhenshi_id=#{zhenshiId},
+             </if>
+             <if test="officeId != null">
+                office_id=#{officeId},
+             </if>
+             <if test="pdNo != null">
+                 pd_no=#{pdNo},
+             </if>
+             <if test="pdTime != null">
+                 pd_time=#{pdTime},
+             </if>
+         </set>
+         where pd_id=#{pdId}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from paidui
+    </select>
+    <select id="findOneByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from paidui where pd_id=#{pdId}
+    </select>
 
 </mapper>
