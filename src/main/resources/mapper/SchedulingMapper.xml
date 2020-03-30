@@ -58,7 +58,7 @@
     <select id="findAllRS" resultMap="BaseResultMap2">
       SELECT * FROM Relationship_9 JOIN scheduling ON scheduling.`scheduling_id`=Relationship_9.`doctor_id`  JOIN doctor ON Relationship_9.`doctor_id`=doctor.`doctor_id`
     </select>
-    <insert id="addRS" parameterType="com.woniu.pojo.RelationShip">
+<insert id="addRS" parameterType="com.woniu.pojo.RelationShip">
         insert into Relationship_9 values( #{doctorId}, #{schedulingId},null)
     </insert>
 </mapper>
