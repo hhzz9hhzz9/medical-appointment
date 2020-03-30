@@ -1,5 +1,6 @@
 package com.woniu.service;
 
+import com.woniu.pojo.RelationShip;
 import com.woniu.pojo.Scheduling;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface SchedulingService {
     void add(Scheduling scheduling);
 
     void updateRS(int scheduling_id, int doctor_id);
+
+    List<RelationShip> findAllRS();
+
+    void addRS(RelationShip rs);
 }

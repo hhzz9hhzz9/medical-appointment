@@ -1,5 +1,6 @@
 package com.woniu.controller;
 
+import com.woniu.pojo.RelationShip;
 import com.woniu.pojo.ResultVO;
 import com.woniu.pojo.Scheduling;
 import com.woniu.service.SchedulingService;
@@ -58,6 +59,22 @@ public class SchedulingController {
     @ResponseBody
     public ResultVO updateScheduling(int scheduling_id, int doctor_id){
         schedulingService.updateRS(scheduling_id,doctor_id);
+        ResultVO resultVO = null;
+        return null;
+    }
+    //排班表和医生表关联表
+    @RequestMapping("findAllRS")
+    @ResponseBody
+    public List findAllRS(){
+        List <RelationShip>list = schedulingService.findAllRS();
+        ResultVO resultVO = null;
+        return list;
+    }
+    @RequestMapping("addRS")
+    @ResponseBody
+    public List addRS(RelationShip rs){
+        System.out.println(rs);
+         schedulingService.addRS(rs);
         ResultVO resultVO = null;
         return null;
     }

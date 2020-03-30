@@ -1,6 +1,7 @@
 package com.woniu.serviceimpl;
 
 import com.woniu.mapper.SchedulingMapper;
+import com.woniu.pojo.RelationShip;
 import com.woniu.pojo.Scheduling;
 import com.woniu.service.SchedulingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,15 @@ public class SchedulingServiceImpl implements SchedulingService {
     @Override
     public void updateRS(int scheduling_id, int doctor_id) {
      mapper.updateRS(scheduling_id,doctor_id)   ;
+    }
+
+    @Override
+    public List<RelationShip> findAllRS() {
+        return mapper.findAllRS();
+    }
+
+    @Override
+    public void addRS(RelationShip rs) {
+        mapper.addRS(rs);
     }
 }
