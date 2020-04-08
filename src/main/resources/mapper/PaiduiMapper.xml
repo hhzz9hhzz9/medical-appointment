@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PaiduiMapper">
-  <resultMap id="BaseResultMap" type="com.web.pojo.Paidui">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Paidui">
     <id column="pd_id" jdbcType="INTEGER" property="pdId" />
     <result column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
     <result column="office_id" jdbcType="INTEGER" property="officeId" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     pd_id, zhenshi_id, office_id, pd_no, pd_time
   </sql>
-  <select id="selectByExample" parameterType="com.web.pojo.PaiduiExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.woniu.pojo.PaiduiExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,19 +93,19 @@
     delete from paidui
     where pd_id = #{pdId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.web.pojo.PaiduiExample">
+  <delete id="deleteByExample" parameterType="com.woniu.pojo.PaiduiExample">
     delete from paidui
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.web.pojo.Paidui">
+  <insert id="insert" parameterType="com.woniu.pojo.Paidui">
     insert into paidui (pd_id, zhenshi_id, office_id, 
       pd_no, pd_time)
     values (#{pdId,jdbcType=INTEGER}, #{zhenshiId,jdbcType=INTEGER}, #{officeId,jdbcType=INTEGER}, 
       #{pdNo,jdbcType=INTEGER}, #{pdTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.web.pojo.Paidui">
+  <insert id="insertSelective" parameterType="com.woniu.pojo.Paidui">
     insert into paidui
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="pdId != null">
@@ -142,7 +142,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.web.pojo.PaiduiExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.woniu.pojo.PaiduiExample" resultType="java.lang.Long">
     select count(*) from paidui
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -182,7 +182,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.Paidui">
+  <update id="updateByPrimaryKeySelective" parameterType="com.woniu.pojo.Paidui">
     update paidui
     <set>
       <if test="zhenshiId != null">
@@ -200,7 +200,7 @@
     </set>
     where pd_id = #{pdId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.web.pojo.Paidui">
+  <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Paidui">
     update paidui
     set zhenshi_id = #{zhenshiId,jdbcType=INTEGER},
       office_id = #{officeId,jdbcType=INTEGER},

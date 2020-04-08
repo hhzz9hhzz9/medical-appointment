@@ -1,8 +1,10 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Astatus;
-import com.web.pojo.AstatusExample;
+
 import java.util.List;
+
+import com.woniu.pojo.Astatus;
+import com.woniu.pojo.AstatusExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface AstatusMapper {

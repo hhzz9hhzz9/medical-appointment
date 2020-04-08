@@ -1,8 +1,10 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Appointment;
-import com.web.pojo.AppointmentExample;
+
 import java.util.List;
+
+import com.woniu.pojo.Appointment;
+import com.woniu.pojo.AppointmentExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface AppointmentMapper {

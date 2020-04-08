@@ -1,30 +1,15 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Doctor;
-import com.web.pojo.DoctorExample;
+import com.woniu.pojo.Doctor;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+@Repository
+@Mapper
 public interface DoctorMapper {
-    long countByExample(DoctorExample example);
 
-    int deleteByExample(DoctorExample example);
+    List<Doctor> findAll();
 
-    int deleteByPrimaryKey(Integer doctorId);
-
-    int insert(Doctor record);
-
-    int insertSelective(Doctor record);
-
-    List<Doctor> selectByExample(DoctorExample example);
-
-    Doctor selectByPrimaryKey(Integer doctorId);
-
-    int updateByExampleSelective(@Param("record") Doctor record, @Param("example") DoctorExample example);
-
-    int updateByExample(@Param("record") Doctor record, @Param("example") DoctorExample example);
-
-    int updateByPrimaryKeySelective(Doctor record);
-
-    int updateByPrimaryKey(Doctor record);
 }

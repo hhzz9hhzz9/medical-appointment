@@ -1,7 +1,7 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Scheduling;
-import com.web.pojo.SchedulingExample;
+import com.woniu.pojo.Scheduling;
+import com.woniu.pojo.SchedulingExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

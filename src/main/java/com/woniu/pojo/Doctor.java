@@ -5,7 +5,7 @@ public class Doctor {
 
     private Integer zhenshiId;
 
-    private Integer officeId;
+    private Office office;
 
     private String doctorName;
 
@@ -25,12 +25,12 @@ public class Doctor {
         this.zhenshiId = zhenshiId;
     }
 
-    public Integer getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
     public String getDoctorName() {

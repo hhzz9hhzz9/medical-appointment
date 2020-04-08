@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.SourcepoolinfoMapper">
-  <resultMap id="BaseResultMap" type="com.web.pojo.Sourcepoolinfo">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Sourcepoolinfo">
     <id column="spi_id" jdbcType="INTEGER" property="spiId" />
     <result column="source_pool_id" jdbcType="INTEGER" property="sourcePoolId" />
     <result column="sp_time" jdbcType="DATE" property="spTime" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     spi_id, source_pool_id, sp_time, sp_stock
   </sql>
-  <select id="selectByExample" parameterType="com.web.pojo.SourcepoolinfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.woniu.pojo.SourcepoolinfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,19 +92,19 @@
     delete from sourcepoolinfo
     where spi_id = #{spiId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.web.pojo.SourcepoolinfoExample">
+  <delete id="deleteByExample" parameterType="com.woniu.pojo.SourcepoolinfoExample">
     delete from sourcepoolinfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.web.pojo.Sourcepoolinfo">
+  <insert id="insert" parameterType="com.woniu.pojo.Sourcepoolinfo">
     insert into sourcepoolinfo (spi_id, source_pool_id, sp_time, 
       sp_stock)
     values (#{spiId,jdbcType=INTEGER}, #{sourcePoolId,jdbcType=INTEGER}, #{spTime,jdbcType=DATE}, 
       #{spStock,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.web.pojo.Sourcepoolinfo">
+  <insert id="insertSelective" parameterType="com.woniu.pojo.Sourcepoolinfo">
     insert into sourcepoolinfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="spiId != null">
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.web.pojo.SourcepoolinfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.woniu.pojo.SourcepoolinfoExample" resultType="java.lang.Long">
     select count(*) from sourcepoolinfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.Sourcepoolinfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.woniu.pojo.Sourcepoolinfo">
     update sourcepoolinfo
     <set>
       <if test="sourcePoolId != null">
@@ -186,7 +186,7 @@
     </set>
     where spi_id = #{spiId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.web.pojo.Sourcepoolinfo">
+  <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Sourcepoolinfo">
     update sourcepoolinfo
     set source_pool_id = #{sourcePoolId,jdbcType=INTEGER},
       sp_time = #{spTime,jdbcType=DATE},

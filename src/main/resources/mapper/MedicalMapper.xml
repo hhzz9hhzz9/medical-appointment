@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.MedicalMapper">
-  <resultMap id="BaseResultMap" type="com.web.pojo.Medical">
+<mapper namespace="com.woniu.mapper.MedicalMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Medical">
     <id column="medical_id" jdbcType="INTEGER" property="medicalId" />
     <result column="medical_time" jdbcType="TIMESTAMP" property="medicalTime" />
+    <result column="medical_info" jdbcType="VARCHAR" property="medicalInfo"/>
     <!--敏感信息，账户名密码不查出-->
     <association property="patient" column="patient_id" javaType="patient">
       <id column="patient_id" jdbcType="INTEGER" property="patientId" />
       <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
       <result column="patient_age" jdbcType="INTEGER" property="patientAge" />
       <result column="patient_gender" jdbcType="INTEGER" property="patientGender" />
-      <result column="patient_status" javaType="INTRGER" property="patientStatus"/>
+      <result column="patient_status" javaType="INTEGER" property="patientStatus"/>
     </association>
-    <association property="doctor" javaType="docter" column="doctor_id">
+    <association property="doctor" javaType="doctor" column="doctor_id">
       <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
       <result column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
-      <result column="office_id" jdbcType="INTEGER" property="officeId" />
+      <!--<result column="office_id" jdbcType="INTEGER" property="office"/>-->
       <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+      <!--<association property="office" column="office_id" javaType="office">-->
+        <!--<id column="office_id" jdbcType="INTEGER" property="officeId" />-->
+        <!--<result column="office_name" jdbcType="VARCHAR" property="officeName" />-->
+      <!--</association>-->
     </association>
   </resultMap>
 
@@ -50,27 +55,116 @@
   <select id="countByPageBean" parameterType="pageBean" resultType="int">
     SELECT COUNT(*) FROM
         (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
     <where>
       <if test="queryVal != null">
         m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
       </if>
       <if test="someday != null">
-        AND m.medical_time like '%'+#{someday}+'%'
+        AND m.medical_time like CONCAT ('%',#{someday},'%')
       </if>
     </where>
   </select>
   <!---查模糊分页处理后病例信息-->
-  <select id="countByPageBean" parameterType="pageBean" resultMap="BaseResultMap">
+  <select id="findAllByPageBean" parameterType="pageBean" resultMap="BaseResultMap">
     SELECT distinct * FROM
     (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
     <where>
       <if test="queryVal != null">
         m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
       </if>
       <if test="someday != null">
-        AND m.medical_time like '%'+#{someday}+'%'
+        AND m.medical_time like CONCAT ('%',#{someday},'%')
       </if>
     </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--周模糊查询处理后病例信息条目数-->
+  <select id="countByTheWeek" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <![CDATA[AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(medical_time)]]>
+    </where>
+  </select>
+  <!--周模糊查询，分页处理病例信息-->
+  <select id="findAllByTheWeek" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <![CDATA[AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(medical_time)]]>
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--月模糊查询处理后病例信息条目数-->
+  <select id="countByTheMonth" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+  </select>
+  <!--月模糊查询，分页处理病例信息-->
+  <select id="findAllByTheMonth" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--根据医生姓名，科室查询处理后的病例总条目数-->
+  <select id="countByDoctorName" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+  </select>
+  <!--根据医生姓名科室查询模糊，分页处理后的病例-->
+  <select id="listByDoctorName" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
     LIMIT ${(nowPage-1)*pageRow},${pageRow}
   </select>
 
@@ -86,19 +180,17 @@
   </where>
 </delete>
 
-
-<!--逆向工程，保留使用语句-->
   <!--根据传入的单个病例信息对象，增加病例信息-->
-  <insert id="insertSelective" parameterType="com.web.pojo.Medical">
+  <insert id="insertSelective" parameterType="medical">
     insert into medical
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="medicalId != null">
         medical_id,
       </if>
-      <if test="patientId != null">
+      <if test="patient.patientId != null">
         patient_id,
       </if>
-      <if test="doctorId != null">
+      <if test="doctor.doctorId != null">
         doctor_id,
       </if>
       <if test="medicalTime != null">
@@ -112,11 +204,11 @@
       <if test="medicalId != null">
         #{medicalId,jdbcType=INTEGER},
       </if>
-      <if test="patientId != null">
-        #{patientId,jdbcType=INTEGER},
+      <if test="patient.patientId != null">
+        #{patient.patientId,jdbcType=INTEGER},
       </if>
-      <if test="doctorId != null">
-        #{doctorId,jdbcType=INTEGER},
+      <if test="doctor.doctorId != null">
+        #{doctor.doctorId,jdbcType=INTEGER},
       </if>
       <if test="medicalTime != null">
         #{medicalTime,jdbcType=TIMESTAMP},
@@ -127,6 +219,9 @@
     </trim>
   </insert>
 
+<!--逆向工程，保留使用语句-->
+
+
   <!--删除病例信息-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from medical
@@ -134,14 +229,14 @@
   </delete>
 
   <!--修改病例信息-->
-  <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.Medical">
+  <update id="updateByPrimaryKeySelective" parameterType="medical">
     update medical
     <set>
-      <if test="patientId != null">
-        patient_id = #{patientId,jdbcType=INTEGER},
+      <if test="patient.patientId != null">
+        patient_id = #{patient.patientId,jdbcType=INTEGER},
       </if>
-      <if test="doctorId != null">
-        doctor_id = #{doctorId,jdbcType=INTEGER},
+      <if test="doctor.doctorId != null">
+        doctor_id = #{doctor.doctorId,jdbcType=INTEGER},
       </if>
       <if test="medicalTime != null">
         medical_time = #{medicalTime,jdbcType=TIMESTAMP},
@@ -161,190 +256,5 @@
 
 
 
-  <!--逆向未用语句-->
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.web.pojo.Medical">
-    <result column="medical_info" jdbcType="LONGVARCHAR" property="medicalInfo" />
-  </resultMap>
 
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-
-  <sql id="Blob_Column_List">
-    medical_info
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.web.pojo.MedicalExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from medical
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" parameterType="com.web.pojo.MedicalExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from medical
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from medical
-    where medical_id = #{medicalId,jdbcType=INTEGER}
-  </select>
-
-  <delete id="deleteByExample" parameterType="com.web.pojo.MedicalExample">
-    delete from medical
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-
-  <insert id="insert" parameterType="com.web.pojo.Medical">
-    insert into medical (medical_id, patient_id, doctor_id,
-                         medical_time, medical_info)
-    values (#{medicalId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER},
-            #{medicalTime,jdbcType=TIMESTAMP}, #{medicalInfo,jdbcType=LONGVARCHAR})
-  </insert>
-
-  <select id="countByExample" parameterType="com.web.pojo.MedicalExample" resultType="java.lang.Long">
-    select count(*) from medical
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update medical
-    <set>
-      <if test="record.medicalId != null">
-        medical_id = #{record.medicalId,jdbcType=INTEGER},
-      </if>
-      <if test="record.patientId != null">
-        patient_id = #{record.patientId,jdbcType=INTEGER},
-      </if>
-      <if test="record.doctorId != null">
-        doctor_id = #{record.doctorId,jdbcType=INTEGER},
-      </if>
-      <if test="record.medicalTime != null">
-        medical_time = #{record.medicalTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.medicalInfo != null">
-        medical_info = #{record.medicalInfo,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update medical
-    set medical_id = #{record.medicalId,jdbcType=INTEGER},
-      patient_id = #{record.patientId,jdbcType=INTEGER},
-      doctor_id = #{record.doctorId,jdbcType=INTEGER},
-      medical_time = #{record.medicalTime,jdbcType=TIMESTAMP},
-      medical_info = #{record.medicalInfo,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update medical
-    set medical_id = #{record.medicalId,jdbcType=INTEGER},
-      patient_id = #{record.patientId,jdbcType=INTEGER},
-      doctor_id = #{record.doctorId,jdbcType=INTEGER},
-      medical_time = #{record.medicalTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.web.pojo.Medical">
-    update medical
-    set patient_id = #{patientId,jdbcType=INTEGER},
-      doctor_id = #{doctorId,jdbcType=INTEGER},
-      medical_time = #{medicalTime,jdbcType=TIMESTAMP},
-      medical_info = #{medicalInfo,jdbcType=LONGVARCHAR}
-    where medical_id = #{medicalId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.web.pojo.Medical">
-    update medical
-    set patient_id = #{patientId,jdbcType=INTEGER},
-      doctor_id = #{doctorId,jdbcType=INTEGER},
-      medical_time = #{medicalTime,jdbcType=TIMESTAMP}
-    where medical_id = #{medicalId,jdbcType=INTEGER}
-  </update>
 </mapper>

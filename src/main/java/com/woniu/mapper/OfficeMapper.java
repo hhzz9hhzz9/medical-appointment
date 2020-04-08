@@ -1,7 +1,7 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Office;
-import com.web.pojo.OfficeExample;
+import com.woniu.pojo.Office;
+import com.woniu.pojo.OfficeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

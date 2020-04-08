@@ -1,8 +1,10 @@
 package com.woniu.mapper;
 
-import com.web.pojo.Paidui;
-import com.web.pojo.PaiduiExample;
+
 import java.util.List;
+
+import com.woniu.pojo.Paidui;
+import com.woniu.pojo.PaiduiExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface PaiduiMapper {

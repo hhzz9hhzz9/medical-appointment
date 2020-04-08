@@ -70,4 +70,17 @@ public class Patient {
     public void setPatientStatus(Integer patientStatus) {
         this.patientStatus = patientStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "patientId=" + patientId +
+                ", patientName='" + patientName + '\'' +
+                ", patientAge=" + patientAge +
+                ", patientAccount='" + patientAccount + '\'' +
+                ", patientPwd='" + patientPwd + '\'' +
+                ", patientGender=" + patientGender +
+                ", patientStatus=" + patientStatus +
+                '}';
+    }
 }

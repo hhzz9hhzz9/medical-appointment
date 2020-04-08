@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.OfficeMapper">
-  <resultMap id="BaseResultMap" type="com.web.pojo.Office">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Office">
     <id column="office_id" jdbcType="INTEGER" property="officeId" />
     <result column="office_name" jdbcType="VARCHAR" property="officeName" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List">
     office_id, office_name
   </sql>
-  <select id="selectByExample" parameterType="com.web.pojo.OfficeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.woniu.pojo.OfficeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -90,17 +90,17 @@
     delete from office
     where office_id = #{officeId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.web.pojo.OfficeExample">
+  <delete id="deleteByExample" parameterType="com.woniu.pojo.OfficeExample">
     delete from office
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.web.pojo.Office">
+  <insert id="insert" parameterType="com.woniu.pojo.Office">
     insert into office (office_id, office_name)
     values (#{officeId,jdbcType=INTEGER}, #{officeName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.web.pojo.Office">
+  <insert id="insertSelective" parameterType="com.woniu.pojo.Office">
     insert into office
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="officeId != null">
@@ -119,7 +119,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.web.pojo.OfficeExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.woniu.pojo.OfficeExample" resultType="java.lang.Long">
     select count(*) from office
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -147,7 +147,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.Office">
+  <update id="updateByPrimaryKeySelective" parameterType="com.woniu.pojo.Office">
     update office
     <set>
       <if test="officeName != null">
@@ -156,7 +156,7 @@
     </set>
     where office_id = #{officeId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.web.pojo.Office">
+  <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Office">
     update office
     set office_name = #{officeName,jdbcType=VARCHAR}
     where office_id = #{officeId,jdbcType=INTEGER}

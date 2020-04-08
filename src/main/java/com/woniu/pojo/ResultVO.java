@@ -17,10 +17,11 @@ public class ResultVO implements Serializable {
     private Integer code;
     private String message;
     private Object data;
-    private PageBean pageBean;
 
     public ResultVO(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
+
+
 }

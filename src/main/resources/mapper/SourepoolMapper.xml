@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.SourepoolMapper">
-  <resultMap id="BaseResultMap" type="com.web.pojo.Sourepool">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Sourepool">
     <id column="source_pool_id" jdbcType="INTEGER" property="sourcePoolId" />
     <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
     <result column="source_name" jdbcType="VARCHAR" property="sourceName" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     source_pool_id, doctor_id, source_name, max_count
   </sql>
-  <select id="selectByExample" parameterType="com.web.pojo.SourepoolExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.woniu.pojo.SourepoolExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,19 +92,19 @@
     delete from sourepool
     where source_pool_id = #{sourcePoolId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.web.pojo.SourepoolExample">
+  <delete id="deleteByExample" parameterType="com.woniu.pojo.SourepoolExample">
     delete from sourepool
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.web.pojo.Sourepool">
+  <insert id="insert" parameterType="com.woniu.pojo.Sourepool">
     insert into sourepool (source_pool_id, doctor_id, source_name, 
       max_count)
     values (#{sourcePoolId,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, #{sourceName,jdbcType=VARCHAR}, 
       #{maxCount,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.web.pojo.Sourepool">
+  <insert id="insertSelective" parameterType="com.woniu.pojo.Sourepool">
     insert into sourepool
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="sourcePoolId != null">
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.web.pojo.SourepoolExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.woniu.pojo.SourepoolExample" resultType="java.lang.Long">
     select count(*) from sourepool
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.Sourepool">
+  <update id="updateByPrimaryKeySelective" parameterType="com.woniu.pojo.Sourepool">
     update sourepool
     <set>
       <if test="doctorId != null">
@@ -186,7 +186,7 @@
     </set>
     where source_pool_id = #{sourcePoolId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.web.pojo.Sourepool">
+  <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Sourepool">
     update sourepool
     set doctor_id = #{doctorId,jdbcType=INTEGER},
       source_name = #{sourceName,jdbcType=VARCHAR},

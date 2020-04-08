@@ -1,5 +1,8 @@
 package com.woniu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,6 +13,9 @@ public class Medical implements Serializable {
 
     private Doctor doctor;
 
+    /*时间格式处理*/
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date medicalTime;
 
     private String medicalInfo;
@@ -52,5 +58,16 @@ public class Medical implements Serializable {
 
     public void setMedicalInfo(String medicalInfo) {
         this.medicalInfo = medicalInfo == null ? null : medicalInfo.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Medical{" +
+                "medicalId=" + medicalId +
+                ", patient=" + patient +
+                ", doctor=" + doctor +
+                ", medicalTime=" + medicalTime +
+                ", medicalInfo='" + medicalInfo + '\'' +
+                '}';
     }
 }

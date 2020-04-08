@@ -33,15 +33,26 @@ public interface IMedicalService {
     List<Medical> findAllTheDay();
 
     /*查全部病例信息，分页模糊查询处理*/
-    List<Medical> findAllBypage(PageBean<Medical> pageBean);
+    List<Medical> findAllByPageBean(PageBean<Medical> pageBean);
 
     /*查分页模糊查询处理后全部病例信息条目数*/
     int countByPageBean(PageBean<Medical> pageBean);
 
+    /*查询模糊处理后的周病例总条目数*/
+    int countByTheWeek(PageBean<Medical> pageBean);
 
-    /*查询本周所有病例信息，分页，模糊查询处理*/
+    /*查询模糊处理后的月病例总条目数*/
+    int countByTheMonth(PageBean<Medical> pageBean);
 
-    /*查询本月所有病例信息，分页，模糊查询处理*/
+    /*查询模糊处理后的周病例*/
+    List<Medical> findAllByTheWeek(PageBean<Medical> pageBean);
 
+    /*查询模糊处理后的月病例*/
+    List<Medical> findAllByTheMonth(PageBean<Medical> pageBean);
 
+    /*根据医生姓名，科室查询处理后的病例总条目数*/
+    int countByDoctorName(PageBean<Medical> pageBean);
+
+    /*根据医生姓名科室查询模糊，分页处理后的病例*/
+    List<Medical> listByDoctorName(PageBean<Medical> pageBean);
 }
