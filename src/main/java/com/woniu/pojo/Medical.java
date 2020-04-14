@@ -1,32 +1,24 @@
 package com.woniu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Medical implements Serializable {
     private Integer medicalId;
 
-    private Integer patientId;
+    private Patient patient;
 
-    private Integer doctorId;
+    private Doctor doctor;
 
+    /*时间格式处理*/
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date medicalTime;
 
     private String medicalInfo;
-
-    private static final long serialVersionUID = 1L;
-
-    public Medical(Integer medicalId, Integer patientId, Integer doctorId, Date medicalTime, String medicalInfo) {
-        this.medicalId = medicalId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.medicalTime = medicalTime;
-        this.medicalInfo = medicalInfo;
-    }
-
-    public Medical() {
-        super();
-    }
 
     public Integer getMedicalId() {
         return medicalId;
@@ -36,20 +28,20 @@ public class Medical implements Serializable {
         this.medicalId = medicalId;
     }
 
-    public Integer getPatientId() {
-        return patientId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Integer getDoctorId() {
-        return doctorId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public Date getMedicalTime() {
@@ -66,5 +58,16 @@ public class Medical implements Serializable {
 
     public void setMedicalInfo(String medicalInfo) {
         this.medicalInfo = medicalInfo == null ? null : medicalInfo.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Medical{" +
+                "medicalId=" + medicalId +
+                ", patient=" + patient +
+                ", doctor=" + doctor +
+                ", medicalTime=" + medicalTime +
+                ", medicalInfo='" + medicalInfo + '\'' +
+                '}';
     }
 }

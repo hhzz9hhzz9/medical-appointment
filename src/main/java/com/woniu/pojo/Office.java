@@ -16,4 +16,11 @@ public class Office implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName == null ? null : officeName.trim();
+    }
 }

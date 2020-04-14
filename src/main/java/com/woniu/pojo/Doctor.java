@@ -1,28 +1,13 @@
 package com.woniu.pojo;
 
-import java.io.Serializable;
-
-public class Doctor implements Serializable {
+public class Doctor {
     private Integer doctorId;
 
     private Integer zhenshiId;
 
-    private Integer officeId;
+    private Office office;
 
     private String doctorName;
-
-    private static final long serialVersionUID = 1L;
-
-    public Doctor(Integer doctorId, Integer zhenshiId, Integer officeId, String doctorName) {
-        this.doctorId = doctorId;
-        this.zhenshiId = zhenshiId;
-        this.officeId = officeId;
-        this.doctorName = doctorName;
-    }
-
-    public Doctor() {
-        super();
-    }
 
     public Integer getDoctorId() {
         return doctorId;
@@ -40,12 +25,12 @@ public class Doctor implements Serializable {
         this.zhenshiId = zhenshiId;
     }
 
-    public Integer getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
     public String getDoctorName() {

@@ -1,5 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.woniu.mapper.DoctorMapper" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.DoctorMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Doctor">
+    <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
+    <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+    <association property="office" column="office_id" javaType="office">
+      <id column="office_id" jdbcType="INTEGER" property="officeId" />
+      <result column="office_name" jdbcType="VARCHAR" property="officeName" />
+    </association>
+  </resultMap>
 
+  <!--查询全部医生信息-->
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT * FROM doctor d LEFT JOIN office o ON d.office_id = o.office_id;
+  </select>
 </mapper>
