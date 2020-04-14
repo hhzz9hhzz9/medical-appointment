@@ -1,19 +1,16 @@
 package com.woniu.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.woniu.pojo.*;
 import com.woniu.service.IDoctorService;
 import com.woniu.service.IMedicalService;
 import com.woniu.service.IPatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 病例模块
@@ -72,6 +69,7 @@ public class MedicalController {
         return resultVO;
     }
 
+
     /*新增病例所需信息*/
     @GetMapping("addInit")
     public ResultVO addInit(){
@@ -109,17 +107,28 @@ public class MedicalController {
         return resultVO;
     }
 
-    /*删除病例，*/
-    @DeleteMapping("del")
-    public ResultVO delete(@RequestBody Map<String,Object> data){
+
+    /*修改病例所需信息*/
+    @PostMapping("updateInit")
+    public ResultVO updateInit(@RequestBody Map<String,Object> map){
         ResultVO resultVO = null;
-        Integer id = (Integer) data.get("id");
+        Integer id = (Integer) map.get("id");
         try {
-            iMedicalService.delete(id);
-            resultVO =new ResultVO(200,"删除成功");
+            /*获取当前需修改病例信息*/
+            Medical medical = iMedicalService.findOne(id);
+            /*获取所有医生信息*/
+            List<Doctor> doctorList = iDoctorService.findAll();
+            /*获取所有患者信息*/
+            List<Patient> patientList = iPatientService.findAll();
+            //封装信息
+            Map<String,Object> resultMap = new HashMap<String,Object>();
+            resultMap.put("doctorList",doctorList);
+            resultMap.put("patientList",patientList);
+            resultMap.put("medical",medical);
+            resultVO =new ResultVO(200,"页面初始化信息查询成功",resultMap);
         } catch (Exception e) {
             e.printStackTrace();
-            resultVO =new ResultVO(500,"删除失败");
+            resultVO =new ResultVO(500,"页面初始化信息查询失败");
         }
         return resultVO;
     }
@@ -139,10 +148,36 @@ public class MedicalController {
         return resultVO;
     }
 
-    /*批量删除*/
-    @DeleteMapping("dels")
-    public ResultVO deletes(@PathVariable("ids") Integer[] ids){
+
+    /*删除病例，*/
+    @DeleteMapping("del")
+    public ResultVO delete(@RequestBody Map<String,Object> data){
         ResultVO resultVO = null;
+        Integer id = (Integer) data.get("id");
+        try {
+            iMedicalService.delete(id);
+            resultVO =new ResultVO(200,"删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultVO =new ResultVO(500,"删除失败");
+        }
+        return resultVO;
+    }
+
+    /*批量删除*/
+    @PostMapping("dels")
+    public ResultVO deletes(@RequestBody Map<String,Object> map){
+        ResultVO resultVO = null;
+        //获取id数组字符串并去掉【】
+        String s = map.get("data").toString().replace("[","").replace("]","");
+        //将字符串以&隔开转为数组
+        String[]  idStrs= s.split("&");
+        //将字符数组转为整数数组
+        Integer[] ids = new Integer[idStrs.length];
+        for (int i=0;i<idStrs.length;i++) {
+            ids[i] = Integer.parseInt(idStrs[i].substring(idStrs[i].indexOf("=")+1,idStrs[i].length()));
+        }
+
         try {
             iMedicalService.deletes(ids);
             resultVO =new ResultVO(200,"批量删除成功");
@@ -152,6 +187,7 @@ public class MedicalController {
         }
         return resultVO;
     }
+
 
     /*周病例信息展示，模糊查询及分页处理(查询条件为某年某周，默认显示本周信息)*/
     @GetMapping("thisWeek")

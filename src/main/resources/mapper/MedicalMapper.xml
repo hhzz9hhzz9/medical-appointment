@@ -10,7 +10,7 @@
       <id column="patient_id" jdbcType="INTEGER" property="patientId" />
       <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
       <result column="patient_age" jdbcType="INTEGER" property="patientAge" />
-      <result column="patient_gender" jdbcType="INTEGER" property="patientGender" />
+      <result column="patient_gender" jdbcType="VARCHAR" property="patientGender" />
       <result column="patient_status" javaType="INTEGER" property="patientStatus"/>
     </association>
     <association property="doctor" javaType="doctor" column="doctor_id">

@@ -11,7 +11,7 @@ public class Patient {
 
     private String patientPwd;
 
-    private Integer patientGender;
+    private String patientGender;
 
     private Integer patientStatus;
 
@@ -55,11 +55,11 @@ public class Patient {
         this.patientPwd = patientPwd == null ? null : patientPwd.trim();
     }
 
-    public Integer getPatientGender() {
+    public String getPatientGender() {
         return patientGender;
     }
 
-    public void setPatientGender(Integer patientGender) {
+    public void setPatientGender(String patientGender) {
         this.patientGender = patientGender;
     }
 
