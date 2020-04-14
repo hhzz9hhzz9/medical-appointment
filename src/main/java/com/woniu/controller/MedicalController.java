@@ -32,7 +32,6 @@ public class MedicalController {
     /*查全部病例信息，分页模糊查询处理(选择时间精确到天，患者姓名)，按时间升序排列病例,默认显示当天病例*/
     @PostMapping("list")
     public ResultVO findAllBypage(@RequestBody PageBean<Medical> pageBean){
-        System.out.println(pageBean);
         ResultVO resultVO = null;
         List<Medical> list = null;
         try {
@@ -136,7 +135,6 @@ public class MedicalController {
     /*修改病例*/
     @PutMapping
     public ResultVO update(@RequestBody Medical medical){
-        System.out.println(medical);
         ResultVO resultVO = null;
         try {
             iMedicalService.update(medical);
