@@ -1,5 +1,260 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.woniu.mapper.MedicalMapper" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.MedicalMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.pojo.Medical">
+    <id column="medical_id" jdbcType="INTEGER" property="medicalId" />
+    <result column="medical_time" jdbcType="TIMESTAMP" property="medicalTime" />
+    <result column="medical_info" jdbcType="VARCHAR" property="medicalInfo"/>
+    <!--敏感信息，账户名密码不查出-->
+    <association property="patient" column="patient_id" javaType="patient">
+      <id column="patient_id" jdbcType="INTEGER" property="patientId" />
+      <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+      <result column="patient_age" jdbcType="INTEGER" property="patientAge" />
+      <result column="patient_gender" jdbcType="VARCHAR" property="patientGender" />
+      <result column="patient_status" javaType="INTEGER" property="patientStatus"/>
+    </association>
+    <association property="doctor" javaType="doctor" column="doctor_id">
+      <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+      <result column="zhenshi_id" jdbcType="INTEGER" property="zhenshiId" />
+      <!--<result column="office_id" jdbcType="INTEGER" property="office"/>-->
+      <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+      <!--<association property="office" column="office_id" javaType="office">-->
+        <!--<id column="office_id" jdbcType="INTEGER" property="officeId" />-->
+        <!--<result column="office_name" jdbcType="VARCHAR" property="officeName" />-->
+      <!--</association>-->
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    medical_id, patient_id, doctor_id, medical_time
+  </sql>
+
+<!--自定义sql语句-->
+
+  <!--查询全部病例信息-->
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+        (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+          LEFT JOIN patient p ON m.patient_id=p.patient_id
+  </select>
+  <!--查询单个病例信息，根据id-->
+  <select id="findOne" resultMap="BaseResultMap" parameterType="medical">
+    SELECT distinct * FROM
+        (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+          LEFT JOIN patient p ON m.patient_id=p.patient_id
+    WHERE medical_id=#{id}
+  </select>
+  <!--根据患者姓名查询其所有病例信息-->
+  <select id="findAllByPatientName" parameterType="string" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+        (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+          LEFT JOIN patient p ON m.patient_id=p.patient_id
+    WHERE m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{patientName})
+  </select>
+  <!--查模糊处理后全部病例信息条目数-->
+  <select id="countByPageBean" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+        (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <if test="someday != null">
+        AND m.medical_time like CONCAT ('%',#{someday},'%')
+      </if>
+    </where>
+  </select>
+  <!---查模糊分页处理后病例信息-->
+  <select id="findAllByPageBean" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <if test="someday != null">
+        AND m.medical_time like CONCAT ('%',#{someday},'%')
+      </if>
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--周模糊查询处理后病例信息条目数-->
+  <select id="countByTheWeek" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <![CDATA[AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(medical_time)]]>
+    </where>
+  </select>
+  <!--周模糊查询，分页处理病例信息-->
+  <select id="findAllByTheWeek" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      <![CDATA[AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(medical_time)]]>
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--月模糊查询处理后病例信息条目数-->
+  <select id="countByTheMonth" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+  </select>
+  <!--月模糊查询，分页处理病例信息-->
+  <select id="findAllByTheMonth" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <!--根据医生姓名，科室查询处理后的病例总条目数-->
+  <select id="countByDoctorName" parameterType="pageBean" resultType="int">
+    SELECT COUNT(*) FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+  </select>
+  <!--根据医生姓名科室查询模糊，分页处理后的病例-->
+  <select id="listByDoctorName" parameterType="pageBean" resultMap="BaseResultMap">
+    SELECT distinct * FROM
+    (medical m LEFT JOIN doctor d ON d.doctor_id=m.doctor_id)
+    LEFT JOIN patient p ON m.patient_id=p.patient_id
+    <where>
+      <if test="queryVal != null">
+        m.patient_id=(SELECT patient_id FROM patient WHERE patient_name=#{queryVal})
+      </if>
+      month(m.medical_time) = month(curdate())
+    </where>
+    /*按时间排序,升序*/
+    order by m.medical_time asc
+    /*分页*/
+    LIMIT ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+
+
+  <!--批量删除病例信息-->
+<delete id="deletes" >
+  DELETE FROM medical
+  <where>
+    medical_id in
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </where>
+</delete>
+
+  <!--根据传入的单个病例信息对象，增加病例信息-->
+  <insert id="insertSelective" parameterType="medical">
+    insert into medical
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="medicalId != null">
+        medical_id,
+      </if>
+      <if test="patient.patientId != null">
+        patient_id,
+      </if>
+      <if test="doctor.doctorId != null">
+        doctor_id,
+      </if>
+      <if test="medicalTime != null">
+        medical_time,
+      </if>
+      <if test="medicalInfo != null">
+        medical_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="medicalId != null">
+        #{medicalId,jdbcType=INTEGER},
+      </if>
+      <if test="patient.patientId != null">
+        #{patient.patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctor.doctorId != null">
+        #{doctor.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalTime != null">
+        #{medicalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medicalInfo != null">
+        #{medicalInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+<!--逆向工程，保留使用语句-->
+
+
+  <!--删除病例信息-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medical
+    where medical_id = #{medicalId,jdbcType=INTEGER}
+  </delete>
+
+  <!--修改病例信息-->
+  <update id="updateByPrimaryKeySelective" parameterType="medical">
+    update medical
+    <set>
+      <if test="patient.patientId != null">
+        patient_id = #{patient.patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctor.doctorId != null">
+        doctor_id = #{doctor.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalTime != null">
+        medical_time = #{medicalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medicalInfo != null">
+        medical_info = #{medicalInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where medical_id = #{medicalId,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+
+
+
 
 </mapper>

@@ -17,5 +17,5 @@ public interface IPaiduiService {
 
     List<Paidui> findAll();
 
-    Paidui findOneByPrimaryKey(Integer paiduiId);
+    Paidui findOneByPrimaryKey(Integer paiduiId) ;
 }
