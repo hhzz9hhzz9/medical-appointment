@@ -1,5 +1,7 @@
 package com.woniu.controller;
 
+import com.woniu.pojo.PageBean;
+import com.woniu.pojo.Paidui;
 import com.woniu.pojo.ResultVO;
 import com.woniu.pojo.Zhenshi;
 import com.woniu.service.IZhenshiService;
@@ -69,6 +71,7 @@ public class ZhenshiController {
         } else {
             resultVO = new ResultVO(500, "查询所有诊室失败");
         }
+
         return resultVO;
     }
     //查询单个诊室
@@ -82,4 +85,15 @@ public class ZhenshiController {
             return new ResultVO(500, "查询诊室失败");
         }
     }
+    @ResponseBody
+    @GetMapping("/findbyofficeid/{officeId}")
+    public ResultVO findOnebyOfficeId(@PathVariable Integer officeId) {
+        List<Zhenshi> list = zhenshiService.findOneByOfficeId(officeId);
+        if(list != null) {
+            return new ResultVO(200, "查询诊室成功", list);
+        } else {
+            return new ResultVO(500, "查询诊室失败");
+        }
+    }
+
 }

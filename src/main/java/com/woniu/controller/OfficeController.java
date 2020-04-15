@@ -67,6 +67,7 @@ public class OfficeController {
         } else {
             resultVO = new ResultVO(500, "查询所有科室失败");
         }
+
         return resultVO;
     }
    //查询单条科室

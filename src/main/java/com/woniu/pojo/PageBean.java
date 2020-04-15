@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PageBean<T> {
 	private Integer nowPage;
-	private Integer pageRow = 5;
+	private Integer pageRow ;
 	private Integer countRow;
 	private Integer countPage;
 	private List<T> list;

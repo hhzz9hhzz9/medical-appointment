@@ -18,4 +18,6 @@ public interface IZhenshiService {
     List<Zhenshi> findAll();
 
     Zhenshi findOneByPrimaryKey(Integer officeId);
+
+    List<Zhenshi> findOneByOfficeId(Integer officeId);
 }

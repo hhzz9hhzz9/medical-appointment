@@ -17,6 +17,7 @@ public class Zhenshi implements Serializable {
 
     private  Office office;
 
+
     private static final long serialVersionUID = 1L;
 
 

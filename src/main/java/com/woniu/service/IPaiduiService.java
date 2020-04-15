@@ -1,5 +1,6 @@
 package com.woniu.service;
 
+import com.woniu.pojo.PageBean;
 import com.woniu.pojo.Paidui;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * @creat 2020/03/2020/3/26 17:45:19
  */
 public interface IPaiduiService {
-    void deleteByPrimaryKey(Integer paiduiId);
+    void deleteByPrimaryKey(Integer pdId);
 
     void insert(Paidui record);
 
@@ -18,4 +19,14 @@ public interface IPaiduiService {
     List<Paidui> findAll();
 
     Paidui findOneByPrimaryKey(Integer paiduiId);
+
+    List<Paidui> selectbypage(PageBean<Paidui>pageBean);
+
+    int countAll();
+
+    List<Paidui> selectbyzhenshi(Integer zhenshiId);
+
+    int countAllbyid(Integer zhenshiId);
+
+    Paidui logpaidui(Integer zhenshiId);
 }

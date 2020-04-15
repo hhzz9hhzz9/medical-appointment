@@ -42,4 +42,9 @@ public class ZhenshiServiceImpl implements IZhenshiService {
     public Zhenshi findOneByPrimaryKey(Integer officeId) {
         return zhenshiMapper.findOneByPrimaryKey(officeId);
     }
+
+    @Override
+    public List<Zhenshi> findOneByOfficeId(Integer officeId) {
+        return zhenshiMapper.findOneByOfficeId(officeId);
+    }
 }

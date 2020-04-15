@@ -9,7 +9,6 @@
         <result column="pd_time" jdbcType="TIMESTAMP" property="pdTime" />
         <association property="zhenshi" javaType="com.woniu.pojo.Zhenshi" column="zhenshi_id" select="com.woniu.mapper.ZhenshiMapper.findOneByPrimaryKey"></association>
         <association property="office" javaType="com.woniu.pojo.Office" column="office_id" select="com.woniu.mapper.OfficeMapper.findOneByPrimaryKey"></association>
-
     </resultMap>
     <sql id="base_col_list">
    pd_id,zhenshi_id,office_id,pd_no,pd_time
@@ -48,6 +47,32 @@
         select
         <include refid="base_col_list"></include>
         from paidui where pd_id=#{pdId}
+    </select>
+
+    <select id="selectbypage" parameterType="com.woniu.pojo.PageBean" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from paidui
+        limit ${(nowPage-1)*pageRow},${pageRow}
+    </select>
+    <select id="countAll" resultType="int">
+   select count(*) from paidui
+    </select>
+    <select id="countAllbyid" parameterType="java.lang.Integer" resultType="int">
+        select count(*) from paidui where zhenshi_id=#{zhenshiId}
+    </select>
+    <select id="selectbyzhenshi" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+         from paidui
+         where zhenshi_id=#{zhenshiId}
+    </select>
+
+
+    <select id="logpaidui" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from
+         (select * from paidui
+        where zhenshi_id=#{zhenshiId})h limit 0,1
     </select>
 
 </mapper>

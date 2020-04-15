@@ -32,5 +32,10 @@
         <include refid="base_col_list"></include>
         from zhenshi where zhenshi_id=#{zhenshiId}
     </select>
+    <select id="findOneByOfficeId"  parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+        from zhenshi where office_id=#{officeId}
+    </select>
 
 </mapper>

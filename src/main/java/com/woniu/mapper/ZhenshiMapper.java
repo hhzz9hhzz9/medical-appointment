@@ -18,4 +18,6 @@ public interface ZhenshiMapper {
 
     Zhenshi findOneByPrimaryKey(Integer officeId);
 
+    List<Zhenshi> findOneByOfficeId(Integer officeId);
+
 }
