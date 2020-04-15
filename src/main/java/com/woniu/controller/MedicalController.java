@@ -183,7 +183,11 @@ public class MedicalController {
             e.printStackTrace();
             resultVO =new ResultVO(500,"批量删除失败");
         }
+<<<<<<< HEAD
         return resultVO  ;
+=======
+        return resultVO;
+>>>>>>> origin/dev
     }
 
 
