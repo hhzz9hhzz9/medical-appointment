@@ -139,7 +139,18 @@ public class PaiduiController {
       int count=paiduiService.countAllbyid(zhenshiId);
         return new ResultVO(200, "查询数量成功", count);
     }
-
+    @ResponseBody
+    @DeleteMapping
+    public ResultVO deletAll(@RequestBody Integer[] checked){
+        try {
+            for(int i=0;i<checked.length;i++) {
+                paiduiService.deleteByPrimaryKey(checked[i]);
+            }
+            return new ResultVO(200, "删除数据成功", checked);
+        } catch (Exception e) {
+            return new ResultVO(500, "删除数据失败", checked);
+        }
+    }
 
 
 }
