@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.woniu.mapper.AppointmentMapper" >
+        <resultMap id="BaseResultMap" type="com.woniu.pojo.Appointment">
+            <id column="appointment_id" jdbcType="INTEGER" property="appointmentId" />
+            <result column="astatus_id" jdbcType="INTEGER" property="astatusId" />
+            <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+            <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+            <result column="aname" jdbcType="VARCHAR" property="aname" />
+            <result column="atime" property="atime" />
+            <association property="doctor" column="doctor_id" javaType="doctor">
+                <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+                <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+            </association>
+            <association property="patient" column="patient_id" javaType="patient">
+                <id column="patient_id" jdbcType="INTEGER" property="patientId" />
+                <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+            </association>
+        </resultMap>
+
+        <!--查询全部预约信息-->
+    <select id="findAllAppointment" resultMap="BaseResultMap">
+    SELECT * FROM appointment a LEFT JOIN doctor d ON d.doctor_id = a.doctor_id LEFT JOIN patient p on p.patient_id = a.patient_id;
+    </select>
+    <!--查询个人预约信息-->
+    <select id="findOneByPatient" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT * FROM appointment a LEFT JOIN doctor d ON d.doctor_id = a.doctor_id LEFT JOIN patient p on p.patient_id = a.patient_id where a.patient_id = #{patientId};
+    </select>
+    <!--新增预约信息-->
+    <insert id="insertSelective" parameterType="appointment">
+        insert into appointment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appointmentId != null">
+                appointment_id,
+            </if>
+            <if test="astatusId != null">
+                astatus_id,
+            </if>
+            <if test="doctorId != null">
+                doctor_id,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="aname != null">
+                aname,
+            </if>
+            <if test="atime != null">
+                atime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appointmentId != null">
+                #{appointmentId},
+            </if>
+            <if test="astatusId != null">
+                #{astatusId},
+            </if>
+            <if test="doctorId != null">
+                #{doctorId},
+            </if>
+            <if test="patientId != null">
+                #{patientId},
+            </if>
+            <if test="aname != null">
+                #{aname},
+            </if>
+            <if test="atime != null">
+                #{atime},
+            </if>
+        </trim>
+    </insert>
+</mapper>
