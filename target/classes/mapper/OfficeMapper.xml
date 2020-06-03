@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.woniu.mapper.OfficeMapper" >
+    <resultMap id="BaseResultMap" type="com.woniu.pojo.Office">
+        <id column="office_id" jdbcType="INTEGER" property="officeId" />
+        <result column="office_name" jdbcType="VARCHAR" property="officeName" />
+
+    </resultMap>
+    <sql id="base_col_list">
+   office_id,office_name
+  </sql>
+    <insert id="insert" parameterType="com.woniu.pojo.Office">
+        insert into office
+      values (null,#{officeName})
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from office where office_id=#{officeId}
+    </delete>
+    <update id="updateByPrimaryKey" parameterType="com.woniu.pojo.Office">
+        update office set office_name=#{officeName} where office_id=#{officeId}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+         from office
+    </select>
+    <select id="findOneByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="base_col_list"></include>
+   from office where office_id=#{officeId}
+    </select>
+
+</mapper>

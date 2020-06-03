@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.woniu.mapper.SchedulingMapper" >
+    <resultMap id="BaseResultMap1" type="com.woniu.pojo.Scheduling">
+        <id property="schedulingId" column="scheduling_id" />
+        <result property="schedulingId" column="scheduling_id" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="duration" column="duration" />
+        <collection  property="list"  ofType="com.woniu.pojo.Doctor">
+            <id property="zhenshiId" column="zhenshi_id" />
+            <result property="officeId" column="office_id" />
+            <result property="officeId" column="office_id" />
+            <result property="doctorName" column="doctor_name" />
+        </collection>
+
+    </resultMap>
+
+
+    <resultMap id="BaseResultMap2" type="com.woniu.pojo.RelationShip">
+        <id property="rsid" column="rsid" />
+        <result property="schedulingId" column="scheduling_id" />
+        <result property="doctorId" column="doctor_id" />
+        <association column="doctor_id" property="doctor"  javaType="com.woniu.pojo.Doctor">
+            <id property="zhenshiId" column="zhenshi_id" />
+            <result property="officeId" column="office_id" />
+            <result property="officeId" column="office_id" />
+            <result property="doctorName" column="doctor_name" />
+        </association>
+        <association  property="scheduling" column="scheduling_id" javaType="com.woniu.pojo.Scheduling">
+            <id property="schedulingId" column="scheduling_id" />
+            <result property="schedulingId" column="scheduling_id" />
+            <result property="startTime" column="start_time" />
+            <result property="endTime" column="end_time" />
+            <result property="duration" column="duration" />
+        </association>
+
+    </resultMap>
+
+
+    <select id="findAll" resultMap="BaseResultMap1">
+      SELECT * FROM Relationship_9 JOIN scheduling ON scheduling.`scheduling_id`=Relationship_9.`doctor_id`  JOIN doctor ON Relationship_9.`doctor_id`=doctor.`doctor_id`
+    </select>
+    <delete id="delete" parameterType="int" >
+        DELETE FROM Relationship_9 WHERE rsid=#{id}
+    </delete>
+   <update id="update" parameterType="com.woniu.pojo.Scheduling" >
+       update scheduling set start_time = #{schedulingId}, end_time = #{endTime},duration=#{duration}
+        where scheduling_id = #{schedulingId}
+   </update>
+    <insert id="add" parameterType="com.woniu.pojo.Scheduling">
+        insert into scheduling values(null, #{startTime}, #{endTime},#{duration})
+    </insert>
+    <update id="updateRS" parameterType="int" >
+       update scheduling set start_time = #{schedulingId}, end_time = #{endTime},duration=#{duration}
+        where scheduling_id = #{schedulingId}
+   </update>
+    <select id="findAllRS" resultMap="BaseResultMap2">
+      SELECT * FROM Relationship_9 JOIN scheduling ON scheduling.`scheduling_id`=Relationship_9.`doctor_id`  JOIN doctor ON Relationship_9.`doctor_id`=doctor.`doctor_id`
+    </select>
+<insert id="addRS" parameterType="com.woniu.pojo.RelationShip">
+        insert into Relationship_9 values( #{doctorId}, #{schedulingId},null)
+    </insert>
+</mapper>

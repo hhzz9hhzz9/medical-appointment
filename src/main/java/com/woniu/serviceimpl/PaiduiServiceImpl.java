@@ -52,8 +52,8 @@ public class PaiduiServiceImpl implements IPaiduiService {
     }
 
     @Override
-    public int countAll() {
-        return paiduiMapper.countAll();
+    public int countAll(PageBean<Paidui> pageBean) {
+        return paiduiMapper.countAll(pageBean);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class PaiduiServiceImpl implements IPaiduiService {
     public Paidui logpaidui(Integer zhenshiId) {
         return paiduiMapper.logpaidui(zhenshiId);
     }
-
-
+    public void deleteByAllKey(Integer[] checked){
+        paiduiMapper.deleteByAllKey(checked);
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -87,7 +89,7 @@ public class PaiduiController {
         pageBean.setPageRow(10);
         List<Paidui> paiduiList = paiduiService.selectbypage(pageBean);
         pageBean.setList(paiduiList);
-        int countRow = paiduiService.countAll();
+        int countRow = paiduiService.countAll(pageBean);
         pageBean.setCountRow(countRow);
         int countPage = pageBean.getCountRow() % pageBean.getPageRow() == 0 ? pageBean.getCountRow() / pageBean.getPageRow() : pageBean.getCountRow() / pageBean.getPageRow() + 1;
         pageBean.setCountPage(countPage);
@@ -139,19 +141,7 @@ public class PaiduiController {
       int count=paiduiService.countAllbyid(zhenshiId);
         return new ResultVO(200, "查询数量成功", count);
     }
-    @ResponseBody
-    @DeleteMapping
-    public ResultVO deletAll(@RequestBody Integer[] checked){
-        try {
-            for(int i=0;i<checked.length;i++) {
 
-                paiduiService.deleteByPrimaryKey(checked[i]);
-            }
-            return new ResultVO(200, "删除数据成功", checked);
-        } catch (Exception e) {
-            return new ResultVO(500, "删除数据失败", checked);
-        }
-    }
 
 
 }

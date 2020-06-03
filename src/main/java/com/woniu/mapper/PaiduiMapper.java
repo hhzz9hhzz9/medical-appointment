@@ -24,13 +24,15 @@ public interface PaiduiMapper {
 
     List<Paidui> selectbypage(PageBean<Paidui> pageBean);
 
-    int countAll();
+    int countAll(PageBean<Paidui> pageBean);
 
     List<Paidui> selectbyzhenshi(Integer zhenshiId);
 
     int countAllbyid(Integer zhenshiId);
 
     Paidui logpaidui(Integer zhenshiId);
+
+    void deleteByAllKey(Integer[] checked);
 
 
 
